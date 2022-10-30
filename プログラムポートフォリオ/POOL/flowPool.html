@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>流れるプール</title>
+<script src="js/flow_gun_run_product.js">
+</script>
+<link rel="stylesheet" href="css/flowPool.css" />
+
+<!--  <script src="js/flowAir.js">
+</script>-->
+</head>
+<body onload="init()">
+	<div>ポイント:<span id="point">0</span>点</div>
+	<canvas id="gamePlane" >
+	</canvas>
+	<!-- <canvas id="display2" >
+	</canvas>-->
+	<form>
+	<input type="button" onclick="gameStart()" value="ゲームスタート"/>
+	<input type="button" onclick="stopGame()" value="停止" />
+	<input type="button" onclick="clearGame()" value="初期化" />
+
+	<table id="OUT">
+		<tr>
+		<th align="center">出力値一覧</th>
+		</tr>
+		<tr>
+		<th colspan="6">(いかに表示)</th>
+		</tr>
+		<tr>
+		<td>ステップ</td>
+		<td>時間</td>
+		<td>横方向の位置</td>
+		<td>縦方向の位置</td>
+		<td>横方向の速度</td>
+		<td>縦方向の速度</td>
+		</tr>
+	</table>
+	</form>
+</body>
+</html>

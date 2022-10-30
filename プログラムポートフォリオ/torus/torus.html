@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="initial-scale=3">
+<title>Insert title here</title>
+<script>
+	//座標
+	var x =100;
+	var y =70;
+	//キーボードが押された時、呼び出し。
+	document.onkeydown = insert;
+	//円の半径
+	var radius = 5;
+	function insert(e) {
+		//キーボードによるデフォルトでの上下を非活性にする
+		if (e.preventDefault) {
+           e.preventDefault();
+        }
+		//描画コンテキストの取得
+		var canvas = document.getElementById('torus');
+		//要素の左端と上端を定義するため、生成
+		var rect = canvas.getBoundingClientRect();
+		//ブラウザ振り分け
+		var userAgent = window.navigator.userAgent.toLowerCase();
+		//firefoxの場合
+		if (userAgent.indexOf('msie') != -1) {
+			//下に行く
+			if (e.which == 40) {
+				y = y + 1;
+				//上に行く
+			} else if (e.which == 38) {
+				y = y - 1;
+				//左に行く
+			} else if (e.which == 37) {
+				x = x - 1;
+				//右に行く
+			} else if (e.which == 39) {
+				x = x + 1;
+			}
+			//その他の場合
+		} else {
+			//下に行く
+			if (e.keyCode == 40) {
+				y = y + 1;
+				//上に行く
+			} else if (e.keyCode == 38) {
+				y = y - 1;
+				//左に行く
+			} else if (e.keyCode == 37) {
+				x = x - 1;
+				//右に行く
+			} else if (e.keyCode == 39) {
+				x = x + 1;
+			}
+
+		}
+		//トーラスの左端までいったら、右端に戻る
+		if (x <= - radius) {
+			x = canvas.width;
+			//トーラスの右端までいったら、左端に戻る
+		} else if (x >= canvas.width) {
+			x = - radius;
+			//トーラスの上端までいったら、下端に戻る
+		} else if (y <= - radius) {
+			y = canvas.height;
+			//トーラスの下端までいったら、上端に戻る
+		} else if (y >= canvas.height) {
+			y = -radius;
+		}
+		sphire(x, y);
+	}
+	//円を描くメソッド
+	function sphire(x_1, y_1) {
+		//描画コンテキストの取得
+		var canvas = document.getElementById('torus');
+		if (canvas.getContext) {
+			//ここに具体的な描画内容を指定する
+			var context = canvas.getContext('2d');
+			context.beginPath();
+			context.fillStyle = "black";
+			context.arc(x_1, y_1, radius, 0, Math.PI * 2, false);
+			context.stroke();
+			context.fill();
+		}
+	}
+	//初期ロード処理
+	function first() {
+		//描画コンテキストの取得
+		var canvas = document.getElementById("torus");
+		//要素の左端と上端を定義するため、生成
+		var rect = canvas.getBoundingClientRect();
+		//幅と高さ
+		canvas.width = 400;
+		canvas.height = 200;
+		//初期座標
+		x =1/2 * canvas.width;
+		y =1/2 * canvas.height;
+		//背景色
+		canvas.style.backgroundColor = "red";
+		sphire(x, y);
+	}
+	//初期化処理
+	function init(){
+		//描画コンテキストの取得
+		var canvas = document.getElementById("torus");
+		if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+		//新しいパスを開始する
+	    context.beginPath();
+	    context.fillStyle = "red";
+	    context.fillRect(0,0,canvas.width,canvas.height);
+	}
+		//初期座標
+		x =1/2 * canvas.width;
+		y =1/2 * canvas.height;
+		sphire(x, y);
+	}
+</script>
+</head>
+<body onload="first()">
+	<div>トーラスマップ</div>
+	<div><b>説明</b></div>
+	<div>↑キー、↓キー、←キー、→キーを押下すると、下の赤四角の中心の黒丸を移動できます。移動前の軌跡も描かれます。
+	<br>また、上端まで行くと、下端に、右端に行くと、左端に行く所謂トーラス構造をしています。</div>
+	<canvas id="torus"></canvas>
+	<form>
+		<div><input type="button" onclick="init()" value="初期化"/></div>
+	</form>
+</body>
+</html>

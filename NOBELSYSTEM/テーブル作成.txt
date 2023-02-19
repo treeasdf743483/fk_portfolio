@@ -1,0 +1,2 @@
+create table theory_t(theoryId int,theory text(500),detail text(20000),basis text(20000),remarks text(20000),userId text(100));
+create table comment_t(theoryId int,theory text(500),commentNo int,comment text(20000));

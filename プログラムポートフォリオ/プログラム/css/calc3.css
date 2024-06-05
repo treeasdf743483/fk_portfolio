@@ -1,0 +1,59 @@
+#numberButton {
+	font-weight: 800;
+	font-family: 'arial';
+	width:30px;
+}
+
+#calcButton {
+	font-weight: 800;
+	font-family: 'arial';
+	width:30px;
+}
+
+#calcT {
+	border-collapse: separate;
+	border-spacing: 4px;
+	background-color: #666666;
+	border: 5px #000000 solid;
+	margin-left: 50px;
+}
+
+#txtT {
+	border-collapse: separate;
+	border-spacing: 4px;
+	margin-top: 10px;
+	background-color: #777777;
+}
+
+#txt {
+	width: 150px;
+}
+
+#NoT {
+	border: 0;
+	background-color: #333333;
+	width:150px;
+}
+
+#M {
+	background: #EEE;
+	border: 1px solid #DDD;
+	border-radius: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	color: #111;
+	width: 30px;
+	padding: 1px 0;
+	font-weight: 800;
+	font-family: 'arial';
+}
+#MemoT{
+	width:150px;
+}
+#button{
+	width:30px;
+}
+#button2{
+	width:30px;
+	padding: 0;
+}

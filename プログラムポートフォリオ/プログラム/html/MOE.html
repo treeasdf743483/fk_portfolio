@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script  src="../js/MOE.js">
+</script>
+<style>
+#h{
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+
+}
+body{
+		font-size:25px;
+	}
+</style>
+<title>球</title>
+</head>
+<body onload="init()">
+<form name="frm">
+<p style="font-size:150%;">惑星運動プログラム</p>
+	<table>
+		<tr>
+			<td>説明:入力値に値を入れて、地球等の惑星を選択。すると、ボールの運動の軌跡が表示される。<br>また、出力値には各ステップ毎の位置等の情報がずらーと下に表示される(30ステップまで)。<br><b>注意：STARTした後では入力値を押すことはできません。入力値を変えて最初から再描画したい場合はもう一度を押して下さい。</b>保存を選択すると軌跡が保存される。
+			</td>
+		</tr>
+		</table>
+	<table>
+		<tr>
+			<th>各パラメーター</th>
+			<th>入力値(全て入力して下さい)</th>
+		</tr>
+		<tr>
+			<td>x方向の初期速度v_x:</td>
+			<td><input type="text" id="v_x" value="20"/></td>
+		</tr>
+		<tr>
+			<td>y方向の初期速度v_y:</td>
+			<td><input type="text" id="v_y" value="20"/></td>
+		</tr>
+		<tr>
+			<td>時間間隔:</td>
+			<td><input type="text" id="t_iv" value="0.5"/></td>
+		</tr>
+		<tr>
+			<td>何秒まで:</td>
+			<td><input type="text" id="t_f" value="20"/></td>
+		</tr>
+		<tr>
+			<td>各惑星(重力定数gを変えた場合)</td>
+			<td>
+				<select name="slt" id="sltid">
+					<option id="earth" value="1">地球</option>
+					<option id="mercury" value="0.377">水星</option>
+					<option id="venus" value="0.91">金星</option>
+					<option id="mars" value="0.378">火星</option>
+					<option id="jupiter" value="2.37">木星</option>
+					<option id="saturn" value="0.93">土星</option>
+					<option id="moon" value="0.17">月</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<div><input type="button" id="start" onclick="animeExe()" value="start"/></div>
+	<div><input type="button" id="stop" onclick="animeStop()" value="stop"/></div>
+	<div><input type="button" id="init" onclick="restart()" value="もう一度"/></div>
+	<div>
+		<select name="save">
+				<option id="yes" value="0">保存</option>
+				<option id="no" value="1" selected>非保存</option>
+		</select></div>
+	<table>
+		<tr>
+			<td align="center" id="h">高さ:800</td>
+			<td><canvas id="cvas"></canvas></td>
+		</tr>
+		<tr>
+			<td align="center"></td>
+			<td align="center">幅:500</td>
+		</tr>
+	</table>
+	<br>
+	<table>
+		<tr>
+			<td>投げた角度(度)</td>
+			<td id="degree"></td>
+		</tr>
+	</table>
+	<table id="OUT">
+		<tr>
+		<th align="center">出力値一覧</th>
+		</tr>
+		<tr>
+		<th colspan="6">(この下に表示されます。STARTすると31行まで出てきます。)</th>
+		</tr>
+		<tr>
+		<td>ステップ</td>
+		<td>時間</td>
+		<td>横方向の位置</td>
+		<td>縦方向の位置</td>
+		<td>横方向の速度</td>
+		<td>縦方向の速度</td>
+		</tr>
+	</table>
+</form>
+</body>
+</html>

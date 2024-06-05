@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+var i = 0;
+function bigFont(){
+	var fstBig = "";
+	var lastBig = "";
+	for(var j = 0;j <= i; j++ ){
+		fstBig = fstBig + "<big>"
+	}
+	for(var j = 0;j <= i; j++ ){
+		lastBig = lastBig + "</big>"
+	}
+	document.getElementById("str").innerHTML = fstBig + document.frm.txt.value + lastBig;
+	i++;
+}
+</script>
+</head>
+<body>
+<form name="frm">
+<input type="text" name="txt" size="10"/>
+<input type="button" onclick="bigFont()" value="bigFont" />
+<div id="str"></div>
+</form>
+</body>
+</html>

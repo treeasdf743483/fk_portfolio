@@ -1,0 +1,23 @@
+#square {
+   width: 100px;
+   height: 100px;
+   background: black;
+}
+#circle {
+   width: 100px;
+   height: 100px;
+   background: black;
+   border-radius:50px;
+
+}
+#triangle {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+    border-bottom: 100px solid black;
+    border-left: 75px solid transparent;
+    border-right: 75px solid transparent;
+}
+#plane{
+	background-color:blue;
+}

@@ -1,0 +1,359 @@
+﻿//作成日時　2016/11/9 35 18  20:00 19:35 1:46
+//m入力 左下にふっきれる 原因　初期値　エラー204行目 b空条件ひっかかる outWrite成功　最初血がy v**2爆発　y爆発　java参照 数値エラー 比例関係 javaから見直す必要あり
+//fエラー 数値エラー
+//エラー x_arr_o[0]エラー x_arr_o[1],x_arr[0]普通
+var x_init = 100;
+var y_init = 300;
+var width = 500;
+var height = 800;
+var radius = 20;
+var t = 0;
+var step = 0;
+var animeObj;
+var stopFlg = false;
+var x_arr = new Array(4);
+var x_arr_o = new Array(4);
+var x_arr0 = new Array(4);
+var saveFlg = false;
+
+var  f = new Array(4);
+var fv = new Array(2);
+var  k1 = new Array(4);
+	var k2 = new Array(4);
+	var k3 = new Array(4);
+	var k4 = new Array(4);
+var initFg = true;
+var b;
+var vy0;
+var h = 0;
+var cnt = 1;
+var x;
+var y;
+
+var planetColor = [ 'rgb(0,255,0)', 'rgb(0,0,255)', 'rgb(200,200,93)',
+		'rgb(255,0,0)', 'rgb(143,99,66)', 'rgb(255,255,255)', '#ffff8c' ];
+var planetz = new Array(100);
+
+function init() {
+	// 初期表示
+	canvasSize();
+	var canvas = document.getElementById("cvas");
+	if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+		// 新しいパスを開始する
+		context.beginPath();
+		// 始め
+		context.arc(x_init, height - y_init, radius, 0, Math.PI * 2, true);
+		// 現在のパスを輪郭表示する
+		context.stroke();
+		// パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+		context.closePath();
+		// 新しいパスを開始する
+
+		for (var m = 0; m <= 6; m++) {
+
+			context.font= 'normal 1px ＭＳ 明朝';
+			planetz[m] = document.frm.slt.options[m].text;
+			context.beginPath();
+			context.strokeStyle = planetColor[m];
+			context.strokeText(planetz[m], width - 140, 3+20 * (m + 1));
+
+			context.moveTo(width - 110, 20 * (m + 1));
+			context.lineTo(width - 10, 20 * (m + 1));
+			context.stroke();
+			context.closePath();
+		}
+	}
+}
+
+function animeExe() {
+	var t_iv;
+	var vx0;
+	var vy0;
+	var t_f;
+	
+	var g_in = 9.80 * Number(document.forms.frm.slt.value);
+	vx0 = Number(document.getElementById("v_x").value.trim());
+    vy0 = Number(document.getElementById("v_y").value.trim());
+	t_f = Number(document.getElementById("t_f").value.trim());
+	t_iv = Number(document.getElementById("t_iv").value.trim());
+	b = Number(document.getElementById("b").value.trim());
+	console.log(b);
+	vx = vx0;
+	vy = vy0;
+	x_arr0[0] = x_init;
+	x_arr0[1] = y_init;
+	x_arr0[2] = vx0;
+	x_arr0[3] = vy0;
+	//document.getElementById("degree").innerHTML=(Math.atan(vy0/vx0)*(180/Math.PI));
+	//console.log("角度"+Math.atan(vy0/vx0)*(180/Math.PI));
+	console.log("b:"+b);
+	var renum = /\d/;
+	if (vx0 == null || !renum.test(vx0) || vy0 == null || !renum.test(vy0)
+			|| t_f == null || !renum.test(t_f)
+			|| t_iv == null || !renum.test(t_iv)
+			|| vx0==""
+			|| vy0==""
+			|| t_f==""
+			|| t_iv==""
+			|| !renum.test(b)) {
+		alert("入力値に数字を入力して下さい。");
+		return null;
+	}
+
+	disable();
+	// 入力チェック
+	console.log("t_fは" + t_f);
+	console.log("t_ivは" + t_iv);
+	console.log("g_inは" + g_in);
+	animeObj = setInterval("motion()", 1000);
+}
+function motion() {
+	
+	var radius;
+
+	var y_md;
+	var t_iv;
+	var g;
+	var vx0;
+	var vy0;
+	var t_f;
+	var m;
+	var a;
+	var v_f;
+	var exp1;
+	var exp2;
+	var x_later;
+	var y_later;
+
+	
+	
+	vx0 = Number(document.getElementById("v_x").value);
+	vy0 = Number(document.getElementById("v_y").value);
+	t_f = Number(document.getElementById("t_f").value);
+	t_iv = Number(document.getElementById("t_iv").value);
+	g = 9.80 * Number(document.forms.frm.slt.value);
+	mass= Number(document.getElementById("m").value);
+	b= Number(document.getElementById("b").value);
+	if(cnt==1){
+		x_arr[0]=x_init;
+		x_arr[1]=y_init;
+		x_arr[2]=vx0;
+		x_arr[3]=vy0;
+		console.log("ttttttttttttttttt");
+	}
+	if(b==0){
+		x = vx0 * t + x_init;
+		y = y_init + vy0 * t - 0.500 * g * t * t;
+		v_x = vx0;
+		v_y = -g*t +vy0; 
+
+	} else {
+		//空気抵抗の速度
+		//vx = vx0*Math.exp(-a/m*t);
+		//vy = -v_f+Math.exp(-a/m*t)*(vy0+v_f);
+		console.log(cnt);
+		
+		f3(x_arr[0],x_arr[1],x_arr[2],x_arr[3]);
+		console.log(f[1]);
+		var delt =  Number(document.getElementById("t_iv").value.trim());
+		for(var i = 0;i <= 3;i++){
+		k1[i] = delt*f[i]/6;
+		console.log(k1[0]);
+		x_arr[i] = x_arr0[i]+ k1[i];
+		f3(x_arr[0],x_arr[1],x_arr[2],x_arr[3]);
+		//エラー箇所
+		console.log(f[1]);
+		k2[i] = delt*f[i];
+		//console.log(k2[i]+"  kkk")
+		x_arr[i] = x_arr0[i]+ k2[i]*0.5;
+		f3(x_arr[0],x_arr[1],x_arr[2],x_arr[3]);
+		k3[i] = delt*f[i];
+		x_arr[i] = x_arr0[i]+ k3[i]*0.5;
+		f3(x_arr[0],x_arr[1],x_arr[2],x_arr[3]);
+		k4[i] = delt*f[i];
+		x_arr[i] = x_arr0[i] + k4[i];
+		
+		x_arr_o[i]=x_arr0[i]+1/6*(k1[i]+k2[i]*2+k3[i]*2+k4[i]);
+		x_arr0[i] = x_arr_o[i];
+		}
+		//エラー箇所
+		console.log("x_arr[0]:   " + x_arr0[0]);
+				//x_arr[i]= k1[i]+k2[i]+k3[i]+k4[i];
+	
+				//v_arr[i]=v_arr[i]+rungekt_lv2(x_arr[i],v_arr[i],i);
+				//console.log("666666666666666666666");
+				//x_arr[i]=x_arr[i]+rungekt_lx2(x_arr[i],v_arr[i],i);
+				//console.log("uuuuuuuuuuuuuuuuuuuuu");
+		//x = x_arr[0];
+		//y=x_arr[1];
+		
+	}
+		//ここまで
+		console.log("x:"+x_arr_o[0]);
+		console.log("vx:"+x_arr_o[2]);
+		//console.log("t"+t);
+	
+	initFlg = false;
+	t=t+t_iv;
+	y_md = height - x_arr_o[1];
+	cnt++;
+	draw(x_later,y_later,x_arr_o[0],y_md);
+	x_later = x_arr_o[0];
+	y_later = y_md;
+	outWrite(x_arr_o[2], x_arr_o[3], x_arr_o[0], x_arr_o[1], t, cnt);
+	if (t >= t_f || y <= 0|| y >= width) {
+		clearInterval(animeObj);
+		cnt = 0;
+	}
+			//停止した時、cntを初期化
+			//if(clearInterval(animeObj)){
+		//		cnt=0;
+		//	}
+	// 出力チェック
+	//console.log(x);
+	//console.log(y);
+	//console.log(t);
+	
+	//console.log("after" + t);
+	
+	//t = t + t_iv;
+	//step++;
+	
+	//console.log("222222222");
+}
+
+function draw(x1,y1,x2,y2){
+var index = Number(document.forms.frm.slt.selectedIndex);
+var canvas = document.getElementById("cvas");
+if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+		var context1 = canvas.getContext('2d');
+			// 新しいパスを開始する
+			context.beginPath();
+			// 色を付ける
+			context.strokeStyle = planetColor[index];
+			console.log("index" + index);
+			// 球の運動
+			if (cnt % 5 == 0 || y <= 0) {
+				context.arc(x2, y2, 20, 0, Math.PI * 2, true);
+			}
+			context.moveTo(x1,y1);
+			context.lineTo(x2, y2);
+			// 現在のパスを輪郭表示する
+			context.stroke();
+			context.closePath();
+			
+		}
+}
+function outWrite(vx, vy, x, y, t, step) {
+	// 内容を表示させるための領域を追加
+	var outTBL = document.getElementById("OUT");
+	if (step <= 30) {
+		var rows = outTBL.insertRow(-1);
+		var outstep = rows.insertCell(0);
+		var outt = rows.insertCell(1);
+		var outx = rows.insertCell(2);
+		var outy = rows.insertCell(3);
+		var outvx = rows.insertCell(4);
+		
+		var outvy = rows.insertCell(5);
+
+		outvx.innerHTML = vx
+		outvy.innerHTML = vy;
+		outx.innerHTML = x;
+		outy.innerHTML = y;
+		outt.innerHTML = t;
+		outstep.innerHTML = step;
+	}
+
+	//console.log("inner" + x);
+	//console.log(y);
+}
+function animeStop() {
+	clearInterval(animeObj);
+	//disable();
+
+}
+// もう一回始める
+function restart() {
+	//console.log(Number(document.forms.frm.save.value));
+	
+	var canvas2 = document.getElementById("cvas");
+	if (canvas2.getContext) {
+		var context = canvas2.getContext('2d');
+		// クリア
+		
+			// 新しいパスを開始する
+			context.beginPath();
+
+			context.clearRect(0, 0, width, height);
+			console.log("3333333333");
+
+			// パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+			context.closePath();
+			// 現在のパスを輪郭表示する
+			context.stroke();
+			clearInterval(animeObj);
+			init();
+	}
+	clearInterval(animeObj);
+	var outTBL2 = document.getElementById("OUT");
+	while (outTBL2.rows[3])
+		outTBL2.deleteRow(3);
+	t = 0;
+	step = 0;
+	able();
+
+}
+// canvasのサイズを設定(自動設定だと正確な値が定められない)
+function canvasSize() {
+	var canvas1 = document.getElementById("cvas");
+	// 横幅を設定
+	canvas1.width=width;
+	// 縦幅を設定
+	canvas1.height=height;
+	// 背景色
+	canvas1.style.backgroundColor = "#aaaaaa";
+}
+
+// 非活性化
+function disable() {
+	document.getElementById("v_x").disabled = true;
+	document.getElementById("v_y").disabled = true;
+	document.getElementById("t_iv").disabled = true;
+	document.getElementById("t_f").disabled = true;
+	document.getElementById("start").disabled = true;
+}
+// 活性
+function able() {
+	document.getElementById("v_x").disabled = false;
+	document.getElementById("v_y").disabled = false;
+	document.getElementById("t_iv").disabled = false;
+	document.getElementById("t_f").disabled = false;
+	document.getElementById("start").disabled = false;
+	
+}
+
+
+function f3(xm,ym,vxm,vym) {
+	var ms=Number(document.getElementById("m").value);
+var b=Number(document.getElementById("b").value);
+//console.log("f3"+vm);
+	var gm = 9.80 * Number(document.forms.frm.slt.value);
+	f[0]=vxm;
+	f[1]=vym;
+		if (vxm >= 0) {
+			f[2] = -b * Math.abs(vxm * vxm);
+
+		} else {
+			f[2] = b * Math.abs(vxm * vxm);
+		}
+		if (vym >= Math.sqrt(Math.abs(m*g/b))) {
+			f[3] = -m * g - b *Math.abs(vym * vym);
+		} else {
+			f[3] = -m * g + b * Math.abs(vym * vym);
+		}
+}
+
+

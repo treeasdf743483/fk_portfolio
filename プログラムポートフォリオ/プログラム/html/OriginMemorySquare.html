@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<script src="../js/OriginMemorySquare.js">
+	</script>
+	<link rel="stylesheet" type="text/css" href="../css/OriginMemorySquare.css"/>
+<title>記憶ゲーム</title>
+</head>
+<body>
+	<form>
+		<table>
+			<tr>
+				<th align="left">説明</th>
+			</tr>
+			<tr>
+				<td>4×4の四角の中から5つの赤色の四角が一瞬表示されます。それが消えるので、その赤色の四角のマス目をクリックして当てるゲームです。もし間違えると、黄色の四角になります。3回間違えたら終了です。</td>
+			</tr>
+			<tr>
+				<td>より難度の高いコースとして6×6,9×9マスもあります。</td>
+			</tr>
+			<tr>
+				<td>マス目と四角の数の早見表。</td>
+			</tr>
+			<tr>
+				<td>
+					<table border="1">
+						<tr>
+							<th>選択</th>
+							<th>マス目</th>
+							<th>記憶する赤四角の数</th>
+						</tr>
+						<tr>
+							<td><input type="radio" name="grid" value="4" checked="checked"></td>
+							<td>4×4</td>
+							<td>5個</td>
+						</tr>
+						<tr>
+							<td><input type="radio" name="grid" value="6"></td>
+							<td>6×6</td>
+							<td>6個</td>
+						</tr>
+						<tr>
+							<td><input type="radio" name="grid" value="9"></td>
+							<td>9×9</td>
+							<td>10個</td>
+						</tr>
+					</table>
+				</tr>
+			</table>
+			<input type="button" value="ゲームスタート" onclick="paintQuest()" id="start"/>
+			<table id="tElm">
+			</table>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--
+2017/7/22 22:45 START 2017/7/28 19:00 START 22 21:11 START 13 22:03 START
+-->
+<meta charset="UTF-8">
+<style type="text/css">
+
+    #paipu{
+    background-color:#000000;
+    
+    }
+
+</style>
+<script>
+//グローバル変数
+	var y = new Array(2);
+	var x = new Array(2);
+	var cnt = 0;
+//キーボードが押された時、呼び出し。
+document.mousedown =insert;
+function insert(e){
+	var canvas = document.getElementById("paipu");
+	var wid = canvas.width;
+	var heigth = canvas.height;
+	
+	var clickX = event.clientX;
+	var clickY = event.clientY;
+
+	// 要素の位置を取得
+	var clientRect = document.getElementById("paipu");
+	var canvasRect = canvas.getBoundingClientRect();
+	//var positionX =  + window.pageXOffset ;
+	//var positionY = clientRect.top + window.pageYOffset ;
+	// 要素内におけるクリック位置を計算
+	x[cnt] = clickX - canvasRect.left;
+	y[cnt] = clickY - canvasRect.top;
+
+	//x[cnt] = event.clientX - canvasRect.left;
+	//y[cnt] = event.clientY - canvasRect.top;
+	cnt++;
+	if(cnt==2){
+		line(x[0],y[0],x[1],y[1]);
+		//test();
+		cnt = 0;
+	}	
+}
+	
+//線を描くメソッド
+function line(Xa, Ya,Xb,Yb) {
+console.log("run");
+	//描画コンテキストの取得
+	var canvas = document.getElementById('paipu');
+	if (canvas.getContext) {
+
+		var context = canvas.getContext('2d');
+		//色指定
+	    context.strokeStyle = 'rgb(255,0,0)';
+	    //線の太さ指定
+		context.lineWidth = 3;
+	    //ここに具体的な描画内容を指定する
+	    //新しいパスを開始する
+	    context.beginPath();
+	    //パスの開始座標を指定する
+	    context.moveTo(Xa,Ya);
+	    //座標を指定してラインを引いていく
+	    context.lineTo(Xb,Yb);
+	    //パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    context.closePath();
+	    //現在のパスを輪郭表示する
+	    context.stroke();
+	}
+}
+
+function paipu(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('paipu');
+	var len = Number(document.getElementById("txt").value);
+	var context = canvas.getContext('2d');
+	if (canvas.getContext) {
+		
+		
+		context.strokeStyle = '#000000';
+		//パスの開始座標を指定する
+	    context.moveTo(x[0],y[0]);
+	    //座標を指定してラインを引いていく
+	    context.lineTo(x[1],y[1]);
+	    context.closePath();
+	    context.stroke();
+	    context.strokeStyle = '#ff0000';
+	    }
+	//正方形の場合
+	if(document.forms.frm.slt.value=="1"){
+	
+	    if (canvas.getContext) {
+	    context.strokeStyle = 'rgb(0,0,0)';
+		//色指定
+	    context.strokeStyle = 'rgb(0,0,255)';
+	    //線の太さ指定
+		context.lineWidth = 1;
+	    //ここに具体的な描画内容を指定する
+	    //新しいパスを開始する
+	    context.beginPath();
+	    //パスの開始座標を指定する
+	    context.moveTo(x[0]-len*0.5,y[0]+len*0.5);
+	    //座標を指定してラインを引いていく
+	    context.lineTo(x[0]-len*0.5,y[0]+len*0.5);
+	    context.lineTo(x[0]+len*0.5,y[0]+len*0.5);
+	    context.lineTo(x[0]+len*0.5,y[0]-len*0.5);
+	    context.lineTo(x[0]-len*0.5,y[0]-len*0.5);
+	    //パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    context.closePath();
+	    context.moveTo(x[1]-len*0.5,y[1]-len*0.5);
+	    context.lineTo(x[1]-len*0.5,y[1]+len*0.5);
+	    context.lineTo(x[1]+len*0.5,y[1]+len*0.5);
+	    context.lineTo(x[1]+len*0.5,y[1]-len*0.5);
+	    context.lineTo(x[1]-len*0.5,y[1]-len*0.5);
+	    //パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    context.closePath();
+	    
+	    context.moveTo(x[0]-len*0.5,y[0]-len*0.5);
+	    context.lineTo(x[1]-len*0.5,y[1]-len*0.5);
+	    context.closePath();
+	    
+	    context.moveTo(x[0]-len*0.5,y[0]+len*0.5);
+	    context.lineTo(x[1]-len*0.5,y[1]+len*0.5);
+	    context.closePath();
+	    
+	    context.moveTo(x[0]+len*0.5,y[0]-len*0.5);
+	    context.lineTo(x[1]+len*0.5,y[1]-len*0.5);
+	    context.closePath();
+	    
+	    context.moveTo(x[0]+len*0.5,y[0]+len*0.5);
+	    context.lineTo(x[1]+len*0.5,y[1]+len*0.5);
+	    context.closePath();
+	    //パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    context.closePath();
+	    //現在のパスを輪郭表示する
+	    context.stroke();
+	    context.strokeStyle = '#ff0000';
+	    context.lineWidth = 3;
+	    
+	    
+	}
+	}
+	else if(document.forms.frm.slt.value=="0"){
+		if (canvas.getContext) {
+		var cnt = canvas.getContext('2d');
+		context.strokeStyle = '#0000ff';
+		context.lineWidth = 1;
+		 //新しいパスを開始する
+	    //cnt.beginPath();
+		//cnt.arc(x[0], y[0],len, 0, Math.PI*2, true);
+		//cnt.arc(x[0], y[0],len, 0, Math.PI, true);
+		//cnt.lineTo(x[1]-len,y[1]);
+	   // cnt.arc(x[1], y[1],len, 0, Math.PI*2, true);
+		
+		//現在のパスを輪郭表示する
+	   // context.stroke();
+	    //新しいパスを開始する
+	    //cnt.beginPath();
+	   // cnt.arc(x[1], y[1],len, 0, Math.PI*0.1875, true);
+		//cnt.arc(x[0], y[0],len, 0, Math.PI*0.1875, true);
+		
+		//パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	   //cnt.closePath();
+	    //現在のパスを輪郭表示する
+	   // cnt.stroke();
+	    
+	    //新しいパスを開始する
+	    cnt.beginPath();
+		cnt.moveTo(x[0]+len,y[0]);
+		cnt.lineTo(x[1]+len,y[1]);
+		//現在のパスを輪郭表示する
+	    cnt.stroke();
+		//パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    cnt.closePath();
+	    
+	    
+	    //新しいパスを開始する
+	    cnt.beginPath();
+		cnt.moveTo(x[0],y[0]-len);
+		cnt.lineTo(x[1],y[1]-len);
+		//現在のパスを輪郭表示する
+	    cnt.stroke();
+		//パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    cnt.closePath();
+	    
+	    //新しいパスを開始する
+	    cnt.beginPath();
+		cnt.moveTo(x[0],y[0]+len);
+		cnt.lineTo(x[1],y[1]+len);
+		//パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    cnt.closePath();
+	    //現在のパスを輪郭表示する
+	    cnt.stroke();
+	    
+	    cnt.beginPath();
+		cnt.moveTo(x[0]+len,y[0]);
+		cnt.lineTo(x[1]+len,y[1]);
+		//パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    cnt.closePath();
+	    //現在のパスを輪郭表示する
+	    cnt.stroke();
+	    
+	    cnt.beginPath();
+		cnt.moveTo(x[0]-len,y[0]);
+		cnt.lineTo(x[1]-len,y[1]);
+		//現在のパスを輪郭表示する
+	    cnt.stroke();
+	    
+	    cnt.beginPath();
+	    cnt.arc(x[0], y[0],len, 0, Math.PI*2, true);
+	    cnt.arc(x[1], y[1],len, 0, Math.PI*2, true);
+		//パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    cnt.closePath();
+	     cnt.stroke();
+	    cnt.strokeStyle = '#ff0000';
+	    
+	    
+	}
+	}
+
+	else if(document.forms.frm.slt.value=="2"){
+		if (canvas.getContext) {
+		var cnt = canvas.getContext('2d');
+		//線の太さ指定
+		cnt.lineWidth = 1;
+		cnt.strokeStyle = '#0000ff';
+		//新しいパスを開始する
+	    cnt.beginPath();
+	    var cnt = canvas.getContext('2d');
+		cnt.beginPath();
+		cnt.moveTo(x[0],y[0]-len*0.5);
+		cnt.lineTo(x[0]-len*0.5,y[0]+len*0.5);
+		cnt.lineTo(x[0]+len*0.5,y[0]+len*0.5);
+		cnt.closePath();
+		cnt.stroke();
+		
+		cnt.beginPath();
+		cnt.moveTo(x[1],y[1]-len*0.5);
+		cnt.lineTo(x[1]-len*0.5,y[1]+len*0.5);
+		cnt.lineTo(x[1]+len*0.5,y[1]+len*0.5);
+		cnt.closePath();
+		cnt.stroke();
+		
+		cnt.beginPath();
+		cnt.moveTo(x[0],y[0]-len*0.5);
+		cnt.lineTo(x[1],y[1]-len*0.5);
+		cnt.closePath();
+		cnt.stroke();
+		cnt.beginPath();
+		cnt.moveTo(x[0]-len*0.5,y[0]+len*0.5);
+		cnt.lineTo(x[1]-len*0.5,y[1]+len*0.5);
+		cnt.closePath();
+		cnt.stroke();
+		cnt.beginPath();
+		cnt.moveTo(x[0]+len*0.5,y[0]+len*0.5);
+		cnt.lineTo(x[1]+len*0.5,y[1]+len*0.5);
+		cnt.closePath();
+		cnt.stroke();
+		}
+	}
+}
+function test(){
+var canvas = document.getElementById('paipu');
+var cnt = canvas.getContext('2d');
+		cnt.strokeStyle = '#0000ff';
+		var len = Number(document.getElementById("txt").value);
+//新しいパスを開始する 13:35 START
+	    cnt.beginPath();
+	    cnt.arc(x[0], y[0],len, 0, Math.PI*1.25, true);
+		cnt.arc(x[1], y[1],len, 0, Math.PI*1.25, true);
+		//パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    cnt.closePath();
+	    //現在のパスを輪郭表示する
+	    cnt.stroke();
+}
+function init(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('paipu');
+	//横幅を設定
+	canvas.width=500;
+	//縦幅を設定
+	canvas.height=400;
+	console.log("init");
+}
+</script>
+<title>管を作る</title>
+</head>
+<body onload="init()">
+<div onmousedown="insert()" id="outdiv">
+<canvas id="paipu">
+</canvas>
+</div>
+<form id="frm">
+<input type="button" value="太さを付ける" onclick="paipu()" />
+<div><b>断面の形</b></div>
+<select name="slt" id="slt">
+<option value="0">円</option>
+<option value="1">正方形</option>
+<option value="2">三角形</option>
+</select>
+<div><b>断面の長さ</b></div>
+<input type="text" value="15" id="txt">
+</select>
+</form>
+</body>
+</html>

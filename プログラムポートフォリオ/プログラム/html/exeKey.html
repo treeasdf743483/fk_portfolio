@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	//生成する文字列に含める文字セット
+	var c = "abcdefghijklmnopqrstuvwxyz";
+	var point = 0;
+	var r = "";
+	var stratSumTime = 0;
+	var endSumTime = 0;
+	var txtSpaceChar = 0;
+	var winSpaceChar = 0;
+	function quest() {
+		//初期化処理
+		r = "";
+		document.getElementById("txt").value = "";
+		document.getElementById("match").innerHTML = "";
+		//生成する文字列の長さ
+		var l = 180;
+		var cl = c.length;
+		var e = "<br>";
+		for (var i = 0; i < l; i++) {
+			r += c.charAt(Math.floor(Math.random() * cl));
+			if (i % 60 == 0 && i != 0) {
+				r += e;
+			}
+		}
+		document.getElementById("question").innerHTML = r;
+		var startTime = new Date();
+		var minute = startTime.getMinutes();
+		var second = startTime.getSeconds();
+		startSumTime = 60 * minute + second;
+		document.getElementById("txt").focus();
+	}
+
+	function sum() {
+		var endTime = new Date();
+		var minute = endTime.getMinutes();
+		var second = endTime.getSeconds();
+		endSumTime = 60 * minute + second;
+		point = Math.floor(point * 1.1) - (endSumTime - startSumTime) + 100;
+		alert("終了です");
+		alert("得点は" + point + "点です");
+		if (point <= 80) {
+			alert("平均より若干遅いです。好きな言葉をタイピングしてみたり、本や新聞の文章をタイピングして練習しましょう");
+		} else if (80 < point && point <= 130) {
+			alert("あなたは平均ぐらいの速さです。キーボードを使いこなしていると自信をもって言えますね");
+		} else if (130 < point && point < 226) {
+			alert("あなたは平均より上の速さです。おめでとう。");
+		} else {
+			alert("あなたはタイピングを極めています。");
+		}
+		//初期化処理
+		point = 0;
+	}
+	function match() {
+		var txtVal = document.getElementById("txt").value;
+		//入力した文字に対する問題の文字
+		var questLen = txtVal.length;
+		var questChar = r.replace(/<br>/g,"").charAt(questLen - 1);
+		var txtLen = txtVal.length;
+		//入力した文字
+		var txtChar = txtVal.charAt(txtLen - 1);
+
+		//改行分考慮
+		if (questChar == "" || questChar == "<br>") {
+			winSpaceChar++;
+		}
+
+		if (txtChar == "") {
+			txtSpaceChar++;
+			return null;
+		}
+		//改行分考慮
+		questLen = questLen + winSpaceChar;
+		txtLen = txtVal.length + txtSpaceChar;
+		if (questChar == txtChar) {
+			document.getElementById("match").innerHTML = "○";
+			point++;
+		} else {
+			document.getElementById("match").innerHTML = "打ち間違えています。見直して下さい。".fontcolor("red");
+		}
+	}
+	function revenge(){
+		//初期化処理
+		r = "";
+		document.getElementById("txt").value = "";
+		document.getElementById("match").innerHTML = "";
+		quest();
+	}
+</script>
+<body>
+	<div><b>説明</b><br>ゲームスタートボタンを押下します。すると、問題の下に文字が表示されます。表示された文字のキーを打って、集計ボタンを選択してください。また、打ち間違えるとメッセージが出てくるので、打った最後の文字あたりを見直して下さい。
+	<br>ポイント換算には時間を使っています。早く打った方が、ポイントが多いです。
+	<br>また、集計ボタンは全ての文字を打たなくても、途中でも集計できます。ただし、それから、また打ち始めるのを再開しないで、もう一度挑戦するボタンから始めてください。ポイント換算が狂ってしまいます。
+	<br>※注意：打ち間違えた後、続けてキーを入力すると、メッセージが消えます。メッセージが表示された場合、キーを打つのは控えて間違いを見つけてからの方が、どのキーを打ち間違えたかわかりやすいです。
+	</div>
+	<form>
+	<input type="button" onClick="quest()" value="ゲームスタート">
+	<br>
+	<div style="color:red"><b>問題</b></div>
+	<b id="question" style="font-size:20px;"></b>
+	<br>
+		<div>タイピング：<input type="text" id="txt" onKeyUp="match()" /></div>
+		<div id="match"></div>
+		<input type="button" onClick="sum()" value="集計" />
+		<input type="button" onClick="revenge()" value="もう一度挑戦する">
+	</form>
+</body>
+</html>

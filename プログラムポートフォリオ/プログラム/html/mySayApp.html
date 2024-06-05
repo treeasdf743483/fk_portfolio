@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>つぶやきアプリ</title>
+<script>
+//順番を決める。(降順:0、昇順:-1)
+var sayOrder = 0;
+function say(){
+	//つぶやく内容を取得
+	var saying = document.getElementById("saying").value.bold();
+
+	//発言がブランクの場合はアラート
+	if(document.getElementById("saying").value=="" || document.getElementById("saying").value == null){
+		alert("何か入力して下さい");
+		return null;
+	}
+
+	//内容を表示させるための領域を追加
+	var sayTBL = document.getElementById("sayTBL");
+	var rows = sayTBL.insertRow(sayOrder);
+	var newCell = rows.insertCell(0);
+	//つぶやいた時間を持つセル
+	var timeCell = rows.insertCell(1);
+	var now = new Date();
+
+	//時を取得する
+	var hour = now.getHours();
+	//分を取得する
+	var minute = now.getMinutes();
+	//秒を取得する
+	var second = now.getSeconds();
+	//時刻の文字列を取得する
+	var time = "発言時間:" + hour + "時" + minute + "分" + second + "秒";
+	//色を取得
+	var color = document.getElementsByName("color");
+	//色を変える。
+	if(color[0].checked){
+		//黒に変える
+		newCell.style.color = "black";
+		timeCell.style.color = "black";
+	}else if(color[1].checked){
+		//赤色に変える
+		newCell.style.color = "red";
+		timeCell.style.color = "red";
+	} else if(color[2].checked){
+		//青色に変える
+		newCell.style.color = "blue";
+		timeCell.style.color = "blue";
+	} else if(color[3].checked){
+		//黄色に変える
+		newCell.style.color = "yellow";
+		timeCell.style.color = "yellow";
+	}
+
+	//つぶやいた内容を表示
+	newCell.innerHTML = saying;
+
+	//つぶやいた時間を表示
+	timeCell.innerHTML = time.small();
+	document.getElementById("saying").value = "";
+}
+//順番逆転
+function reverse(flg){
+	if(flg){
+		//降順
+		sayOrder = 0;
+	} else {
+		//昇順
+		sayOrder = -1;
+	}
+
+}
+</script>
+<style type="text/css">
+<!--
+	#sayButton{
+		font-weight:bold;
+		color:#ff0000;
+	}
+	body{
+		font-size:25px;
+	}
+->
+</style>
+</head>
+<body>
+<form>
+<p style="font-size:150%;">つぶやきプログラム</p>
+<table>
+	<tr>
+		<th align="left">説明</th>
+	</tr>
+	<tr>
+		<td>テキストに発言したい文章を入力して発言ボタンを押下すると、その下に入力した文章と時間が表示される。<br>色を変えることも可能。
+		また、発言する際に新しいコメントが上に来るように表示ボタンを押下してから発言ボタンを押下すると、コメントの一番上に文章が表示される。<br>新しいコメントが下にくるように表示ボタンでは一番下となる
+		<br>(デフォルトは一番上)</td>
+		</tr>
+	</table>
+<input type="text" id="saying"/>
+<input type="button" onclick="say()" id="sayButton" value="発言"/>
+<br>
+<input type="button" value="新しいコメントが上に来るように表示" onclick="reverse(true)"/>
+<input type="button" value="新しいコメントが下にくるように表示" onclick="reverse(false)" />
+<table>
+	<tr>
+		<td><input type="radio" name="color" value="black" checked="checked"/>黒色</td>
+		<td><input type="radio" name="color" value="red" />赤色</td>
+		<td><input type="radio" name="color" value="blue" />青色</td>
+	</tr>
+</table>
+<table id="sayTBL">
+</table>
+</form>
+</body>
+</html>

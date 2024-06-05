@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>キーボード入力</title>
+<script>
+//今まで入力した全キーを保持
+var key10 = "";
+var ink = "";
+var kc = "";
+var sflg = false;
+var keyarr = new Array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X"
+		,"Y","Z");
+document.onkeydown =function(e){
+	kc= e.keyCode;
+	ink = keyarr[kc-65];
+	
+	key10 = key10 + keyarr[kc-65];
+	
+	document.getElementById(keyarr[kc-65]).style.color = "red";
+	setTimeout(init2,100);
+	
+	document.getElementById("outkey").value = key10;
+	function init2(){
+	document.getElementById(keyarr[kc-65]).style.color = "black";
+}
+}
+ //入力したキーをテキストに出力
+function inkey(inputkey){
+	//var strkey = new String(inputkey);
+	var strkey = inputkey;
+	ink = strkey;
+	if(sflg){
+		strkey=strkey.toLowerCase();
+		console.log(strkey);
+	}else {
+		strkey=strkey.toUpperCase();
+	}
+	
+	key10 = key10 + strkey;
+	console.log(strkey);
+	//キーをテキストに出力
+	var keyTBL = document.getElementById("keyTBL");
+	document.getElementById(inputkey).style.color = "red";
+	document.getElementById("outkey").value = key10;
+	setTimeout(init,100);
+}
+function init(){
+	document.getElementById(ink).style.color = "black";
+}
+
+	//16:56
+function shift(){
+	
+	sflg=!sflg;
+	if(sflg){
+		document.getElementById("SFT").style.color = "red";
+	}else{
+		document.getElementById("SFT").style.color = "black";
+	}
+	
+}
+</script>
+</head>
+<body>
+<form id="form">
+<input type="text" id="outkey"/>
+<table id="keyTBL">
+  <tr>
+    <td><input type="button" id="Q" onclick="inkey('Q')" value="Q"></td>
+    <td><input type="button" id="W" onclick="inkey('W')" value="W"></td>
+    <td><input type="button" id="E" onclick="inkey('E')" value="E"></td>
+    <td><input type="button" id="R" onclick="inkey('R')" value="R"></td>
+    <td><input type="button" id="T" onclick="inkey('T')" value="T"></td>
+    <td><input type="button" id="Y" onclick="inkey('Y')" value="Y"></td>
+    <td><input type="button" id="U" onclick="inkey('U')" value="U"></td>
+    <td><input type="button" id="I" onclick="inkey('I')" value="I"></td>
+    <td><input type="button" id="O" onclick="inkey('O')" value="O"></td>
+    <td><input type="button" id="P" onclick="inkey('P')" value="P"></td>
+  </tr>
+  <tr>
+    <td><input type="button" id="A" onclick="inkey('A')" value="A"></td>
+    <td><input type="button" id="S" onclick="inkey('S')" value="S"></td>
+    <td><input type="button" id="D" onclick="inkey('D')" value="D"></td>
+    <td><input type="button" id="F" onclick="inkey('F')" value="F"></td>
+    <td><input type="button" id="G" onclick="inkey('G')" value="G"></td>
+    <td><input type="button" id="H" onclick="inkey('H')" value="H"></td>
+    <td><input type="button" id="J" onclick="inkey('J')" value="J"></td>
+    <td><input type="button" id="K" onclick="inkey('K')" value="K"></td>
+    <td><input type="button" id="L" onclick="inkey('L')" value="L"></td>
+  </tr>
+  <tr>
+    <td><input type="button" id="Z" onclick="inkey('ENTER')" value="out"></td>
+    <td><input type="button" id="Z" onclick="inkey('Z')" value="Z"></td>
+    <td><input type="button" id="X" onclick="inkey('X')" value="X"></td>
+    <td><input type="button" id="C" onclick="inkey('C')" value="C"></td>
+    <td><input type="button" id="V" onclick="inkey('V')" value="V"></td>
+    <td><input type="button" id="B" onclick="inkey('B')" value="B"></td>
+    <td><input type="button" id="N" onclick="inkey('N')" value="N"></td>
+    <td><input type="button" id="M" onclick="inkey('M')" value="M"></td>
+    <td><input type="button" id="SFT" onclick="shift()" value="SHIFT"></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

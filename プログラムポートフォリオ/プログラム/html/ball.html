@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--
+2017/7/22 22:45 START 2017/7/28 19:00 START 22 21:11 START 13 22:03 START
+-->
+<meta charset="UTF-8">
+<style type="text/css">
+#ball {
+    width: 1000px;
+    height: 600px;
+}
+</style>
+<script>
+//エラー　g7クリアされない。
+const ballNum = 10;
+const ballwid = 10;
+const ballheight = 50;
+const ballInitx = 10;
+const ballInity = 40;
+const ballradius = 50;
+var sltFlg;
+var coordinate = new Array(100);
+var rvsFlg = false;
+	var nextFlg=true;
+	var clr = 'rgb(255,00,00)';
+	var black = 'rgb(00,00,00)';
+	var blue = 'rgb(00,00,255)';
+	var green = 'rgb(00,255,00)';
+	var clrCount = 0;
+	var t = 0;
+	var w = 1;
+	var md = 1;
+	var md3 = 1;
+	var g1;
+	var g2;
+	var g3;
+	var g4;
+	var g5;
+	var g6;
+	var l;
+	var n = 0;
+	var m;
+	var i2=1;
+var flg = true;
+function sphire(x,y,oclr) {
+	var canvas = document.getElementById("ball");
+	var wid = canvas.width;
+	var heigth = canvas.height;
+	
+	// 画面の左端から、要素の左端までの距離
+		var posx = canvas.left ;
+		// 画面の上端から、要素の上端までの距離
+		var posy = canvas.top ;
+
+	if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+			// ここに具体的な描画内容を指定する
+			// 新しいパスを開始する
+			context.beginPath();
+			// パスの開始座標を指定する
+			context.arc(x, y,ballwid ,0, 2*Math.PI, true);
+			// パスを閉じる（最後の座標から開始座標に向けてラインを引く)
+			context.closePath();
+			// 現在のパスを輪郭表示する
+			context.stroke();
+			context.fillStyle = oclr; //枠線の色は青
+			context.fill();
+		}
+}
+function init(){
+	//var ballIndex = new Array(100);
+    
+	var interval = ballwid;
+		coordinate[0] = ballInitx;
+		
+		for(n = 1;n <= 28;n++){
+			if(n <= 10){
+				coordinate[n] = 2*interval+ 5 + coordinate[n-1];
+				sphire(coordinate[n],ballInity,'rgb(00,00,00)');
+			}
+			else if(n <= 19){
+				coordinate[n] = -2*interval - 5 + coordinate[n-1];
+			}
+			else if(n <= 28){
+				coordinate[n] = 2*interval + 5 + coordinate[n-1];
+			}
+		}
+}
+
+//var g = setInterval(motion, 10);
+//function flow(){
+//	var initx = ballInitx;
+//	var time;
+//	var coordinate = new Array(2);
+//	coordinate[0] = new Array(100);
+///	coordinate[1] = new Array(100);
+//	var x_t = coordinate[0];
+//	//var y_t = coordinate[1];
+//	var verocity = 1;
+//	x_t[0] = initx + time*verocity;
+//	for(time=0:time <= 100;time++){
+//		x_t[i]=x_t[i] + time*verocity;
+//		for(var i = 0;i <= 9;i++){
+//			if(x_t[i-1] > x_t[i]){
+//				x_t[i]=x_t[i] + time*0.50*verocity;
+//				x_t[i-1]=x_t[i];
+//				sphire(x[i],ballInity);
+///		}
+//	}
+//
+function oscillation_reverse(){
+    g1 = setInterval(reverse, 1500);
+}
+function reverse(){
+var osciFlg = true;
+		for(m = 1;m <= 10;m++){
+			
+			if(m % 2 ==1){
+				if(nextFlg == true){
+					if(rvsFlg == true){
+						sphire(coordinate[m],ballInity,clr);
+						m++;
+						sphire(coordinate[m],ballInity,black);
+						rvsFlg = !rvsFlg;
+					}
+					else{
+						sphire(coordinate[m],ballInity,black);
+						m++;
+						sphire(coordinate[m],ballInity,clr);
+						rvsFlg = !rvsFlg;
+					}
+				}else{
+					if(rvsFlg == true){
+						sphire(coordinate[m],ballInity,black);
+						m++;
+						sphire(coordinate[m],ballInity,clr);
+						rvsFlg = !rvsFlg;
+					}
+					else{
+						sphire(coordinate[m],ballInity,clr);
+						m++;
+						sphire(coordinate[m],ballInity,black);
+						rvsFlg = !rvsFlg;
+					}
+				}
+			}
+		}
+		m=1;
+		nextFlg =  !nextFlg;
+		rvsFlg=false;
+		console.log(nextFlg);
+}
+function oscillation(){
+    onoff();
+	}
+function wave(){
+    sltFlg= document.forms.frm.slt.value;
+	if(sltFlg == "0"){
+		n++;
+	}else if(sltFlg == "1"){
+		n++;
+		console.log(coordinate[n]);
+		if(n == 19){
+			n=1;
+		}
+		//if(n == 10) {
+		//flg=false;
+		//} else if(n == 1){
+		//flg = true;
+		//}
+		//if(flg== true){
+		//n++;
+		//} else {
+		//n--
+		//}
+	}
+	else if(sltFlg == "2"){
+		n++;
+		if(n == 10){
+		n = 1;
+		}
+		
+	}
+	g2 = setTimeout(onoff,500);
+	}
+function onoff2(){
+	sphire(coordinate[n+1],ballInity,black);
+	sphire(coordinate[n],ballInity,clr);
+	g2 = setTimeout(offoff,500);
+}
+function offon(){
+	sphire(coordinate[n+1],ballInity,clr);
+	sphire(coordinate[n],ballInity,black);
+	g2 = setTimeout(onoff2,500);
+}
+function offoff(){
+	sphire(coordinate[n+1],ballInity,black);
+	sphire(coordinate[n],ballInity,black);
+	wave();
+}
+function onoff(){
+	sphire(coordinate[n+1],ballInity,black);
+	sphire(coordinate[n],ballInity,clr);
+	g2 = setTimeout(offon,500);
+}
+
+function oscillation_all(){
+	
+	g3 = setInterval(al, 5000);
+	}
+function al(){	
+	var clrArr = new Array(2);
+	if(clrCount == 0){
+			clrArr[0]=clr;
+			clrArr[1]=blue;
+			
+			
+		} else if(clrCount == 1){
+			clrArr[0]=green;
+			clrArr[1]=clr;
+			
+			
+		} else if(clrCount == 2){
+			clrArr[0]=blue;
+			clrArr[1]=green;
+		}
+		clrCount++;
+		console.log(clrCount);
+		if(clrCount == 3){
+			clrCount=0;
+		}
+		
+	for(l = 1;l<= 10;l++){
+		
+		
+		sphire(coordinate[l],ballInity,clrArr[0]);
+		l++;
+		sphire(coordinate[l],ballInity,clrArr[1]);
+	}
+}
+function waver(){
+	
+	g4 = setInterval(wave2, 1000);
+	
+}
+//14.03
+function wave2(){
+if(t <= 13){
+	sphire(coordinate[15-t],ballInity,clr);
+	sphire(coordinate[15+t],ballInity,clr);
+	sphire(coordinate[15-t+1],ballInity,black);
+	sphire(coordinate[15+t-1],ballInity,black);
+	t++;
+	}
+}
+function move(){
+	g5 = setInterval(move2,1000);
+ }
+ //グローバル変数
+ var delFlg = false;
+ 
+function move2(){
+		sphire(coordinate[w],ballInity,clr);
+		if(delFlg){
+			sphire(coordinate[10],ballInity,black);
+			delflg = false;
+		}
+		if(w >= 2){
+			sphire(coordinate[w-1],ballInity,black);
+		}
+		
+		if(document.forms.frm.slt.value == "2" && w >=  10){
+			w = 0;
+		}
+		if(w == 0){
+			
+			delFlg = true;
+		}
+		//console.log(w);
+		w++;
+}
+function waveGroup(){
+	g6 = setInterval(waveGroup2,5000);
+}
+function waveGroup2(){
+		
+		while(i2 <= 10){
+		if(i2 % 2 == 1 && i2 % 3 == 1){
+			sphire(coordinate[i2 + md],ballInity,blue);
+		}
+		else if(i2 % 2 == 1){
+			sphire(coordinate[i2 +md],ballInity,clr);
+		}
+		else if(i2 % 3 == 1){
+			sphire(coordinate[i2 + md],ballInity,green);
+		}
+			i2++;
+		}
+	md++;
+	md3++;
+	
+	
+}
+//初期化
+function final(){
+	//全部点灯クリアされない
+	clearInterval(g1);
+	clearTimeout(g2);
+	clearInterval(g2);
+	clearInterval(g3);
+	clearInterval(g4);
+	clearInterval(g5);
+	clearInterval(g6);
+	bk();
+	
+}
+function bk(){
+	//一つ出現
+	for(var dial = 1;dial<=30;dial++){
+	if(dial != 19 || dial != 30){
+		sphire(coordinate[dial],ballInity,black);
+	}
+	}
+	t = 0;
+	w = 1;
+	md = 1;
+	md3 = 1;
+	l=0;
+	n = 0;
+	m=0;
+	i2=1;
+}
+function waver2(){
+	g7 = setInterval(waver21(),5000);
+}
+function waver21(){
+	
+}
+</script>
+<title>一次元ボール</title>
+</head>
+<body onload="init()">
+<canvas id="ball">
+</canvas>
+<form id="frm">
+<input type="button" value="直進" onclick="move()">
+<input type="button" value="点滅1" onclick="oscillation()">
+<input type="button" value="点滅2" onclick="oscillation_reverse()">
+<input type="button" value="点滅3" onclick="oscillation_all()">
+<input type="button" value="伝播" onclick="waver()">
+<input type="button" value="伝播2" onclick="waver2()">
+<input type="button" value="終了" onclick="final()">
+<select name="slt" id="slt">
+<option value="0">通常</option>
+<option value="1">反射</option>
+<option value="2">最初に戻る</option>
+</select>
+</form>
+</body>
+</html>

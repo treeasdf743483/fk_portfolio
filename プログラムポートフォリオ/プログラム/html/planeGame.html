@@ -1,0 +1,178 @@
+<!-- 19:50 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>図形組み合わせゲーム</title>
+<style>
+#square {
+   width: 100px;
+   height: 100px;
+   background: black;
+}
+#circle {
+   width: 100px;
+   height: 100px;
+   background: black;
+   border-radius:50px;
+
+}
+#triangle {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+    border-bottom: 100px solid black;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+}
+#plane{
+	background-color:blue;
+}
+</style>
+<script>
+var outObj = '';
+function copy(obj){
+outObj=new String(obj);
+console.log(outObj);
+}
+var conWid=100;
+var conH=100;
+var r_g=50;
+var H_g=100;
+var l_g=50;
+function release(){
+	event = arguments.callee.caller.arguments[0];
+	// マウス位置を取得する
+	var mouseX = event.clientX;	// X座標
+	var mouseY = event.clientY;	// Y座標
+	// 要素の左上からの距離を計算
+	var x = 0;
+	var y = 0;
+	var canvas = document.getElementById('plane');
+	var canvasRect = canvas.getBoundingClientRect();
+		x =mouseX - canvasRect.left;
+		y =mouseY - canvasRect.top;
+		flg = 1;
+	if(outObj==""){
+		alert("図形を選んで下さい");
+		return;
+	}
+	else if(outObj=="square"){
+		square(x,y);
+	}
+
+	else if(outObj=="circle"){
+	
+	circle(x,y);
+	}
+	else if(outObj=="triangle"){
+		triangle(x,y);
+	}
+	else{
+		alert("システムエラー。システム設計者<b>(ブログ主)</b>の作り間違いです。コメントして下さると助かります");
+	}
+}
+
+function square(x,y){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('plane');
+	if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+	    //ここに具体的な描画内容を指定する
+	   
+	    context.beginPath();
+	    context.fillRect(x-conWid*0.5,y-conH*0.5,conWid,conH);
+	    context.fill();
+	    context.closePath();
+	}
+}
+function circle(x,y){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('plane');
+	if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+		context.beginPath();
+		
+		context.arc(x,y,50,0,Math.PI*2,true);
+
+		context.closePath();
+		context.fill();
+		context.stroke();
+
+	}
+}
+function triangle(x,y,r,l,H){
+	//描画コンテキストの取得
+	r=r_g;
+	l=l_g;
+	H=H_g;
+	var canvas = document.getElementById('plane');
+	if (canvas.getContext) {
+		var cnt = canvas.getContext('2d');
+		cnt.beginPath();
+		cnt.moveTo(x,y-H*0.5);
+		cnt.lineTo(x-r,y+H*0.5);
+		cnt.lineTo(x+l,y+H*0.5);
+		cnt.lineTo(x,y-H*0.5);
+
+		cnt.closePath();
+		cnt.fill();
+		cnt.stroke();
+}
+}
+function init(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('plane');
+	//横幅を設定
+	canvas.width=800;
+	//縦幅を設定
+	canvas.height=400;
+}
+//初期化
+function first(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('plane');
+	if (canvas.getContext) {
+		var cnt = canvas.getContext('2d');
+		cnt.beginPath();
+		cnt.fillRect(0,0,canvas.width,canvas.height);
+		cnt.closePath();
+	}
+}
+</script>
+</head>
+<body onload="init()">
+
+<div><b>説明</b>下記図形の中心をクリックしてから、右の青い四角をクリックすると、青い四角に図形を描ける</div>
+<form>
+<table>
+<tr>
+<td>
+<table>
+<tr>
+<td >
+<div id="square" onclick="copy('square')"></div>
+</td>
+<td>
+<div id="triangle" onclick="copy('triangle')"></div>
+</td>
+<td>
+<div id="circle" onclick="copy('circle')"></div>
+</td>
+</table>
+</td>
+<td>
+<table>
+<td onclick="release()">
+<canvas id="plane" >
+</canvas>
+
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>

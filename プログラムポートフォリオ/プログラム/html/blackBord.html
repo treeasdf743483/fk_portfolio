@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style type="text/css">
+<!--
+    #draw{
+    background-color:#3c5a3c;
+    }
+    ->
+</style>
+<script type="text/javascript">
+
+var x = new Array(2);
+var y = new Array(2);
+ var flg = 0;
+
+//キーボードが押された時、呼び出し。
+document.onkeydown =insert;
+function insert(e){
+	//ブラウザ振り分け
+	var userAgent = window.navigator.userAgent.toLowerCase();
+	//firefoxの場合
+	if(userAgent.indexOf('msie') != -1){
+		//Sキー
+		if(e.which == 83){
+
+			square(x[0],y[0]);
+			flg = 0;
+		//Oキー
+		} else if(e.which == 79){
+	    	sphire(x[0],y[0]);
+	    	flg = 0;
+	    }
+	} else {
+	//その他の場合
+		//Sキー
+		if(e.keyCode == 83){
+
+			square(x[0],y[0]);
+			flg = 0;
+		//Oキー
+		} else if(e.keyCode == 79){
+    		sphire(x[0],y[0]);
+    		flg = 0;
+    	}
+	}
+}
+function draw(){
+	//firefox対応
+	event = arguments.callee.caller.arguments[0] || window.event;
+	var canvasObj = document.getElementById("draw");
+	var canvasRect = canvasObj.getBoundingClientRect();
+	if(flg == 0){
+		x[0] = event.clientX - canvasRect.left;
+		y[0] = event.clientY - canvasRect.top;
+		flg = 1;
+	} else {
+		x[1] = event.clientX - canvasRect.left;
+		y[1] = event.clientY - canvasRect.top;
+		flg = 0;
+		line(x[0],y[0],x[1],y[1]);
+	}
+}
+//線を描くメソッド
+function line(Xa, Ya,Xb,Yb) {
+	//描画コンテキストの取得
+	var canvas = document.getElementById('draw');
+	if (canvas.getContext) {
+
+		var context = canvas.getContext('2d');
+		//色指定
+	    context.strokeStyle = 'rgba(255,255,255,0.85)';
+	    //線の太さ指定
+		context.lineWidth = 3;
+	    //ここに具体的な描画内容を指定する
+	    //新しいパスを開始する
+	    context.beginPath();
+	    //パスの開始座標を指定する
+	    context.moveTo(Xa,Ya);
+	    //座標を指定してラインを引いていく
+	    context.lineTo(Xb,Yb);
+	    //パスを閉じる（最後の座標から開始座標に向けてラインを引く）
+	    context.closePath();
+	    //現在のパスを輪郭表示する
+	    context.stroke();
+	}
+}
+
+//四角を描くメソッド
+function square(x,y){
+	var heigth = document.getElementById("heigth").value;
+	var width = document.getElementById("width").value;
+	if(heigth == "" || heigth ==null){
+		alert("縦の長さを指定してください");
+		return null;
+	} else if(width == "" || width ==null){
+		alert("横の長さを指定してください");
+		return null;
+	}
+	//描画コンテキストの取得
+	var canvas = document.getElementById('draw');
+	if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+	    //ここに具体的な描画内容を指定する
+		var ctx = canvas.getContext('2d');
+		//色指定
+	    context.strokeStyle = 'rgba(255,255,255,0.85)';
+	    //線の太さ指定
+		context.lineWidth = 3;
+		ctx.beginPath();
+		ctx.strokeRect(x-10, y-10, width, heigth);
+		ctx.stroke();
+	}
+}
+
+//円を描くメソッド
+function sphire(x,y){
+	var radius = document.getElementById("radius").value;
+	if(radius == "" || radius ==null){
+		alert("半径を指定してください");
+		return null;
+	}
+		//描画コンテキストの取得
+		var canvas = document.getElementById('draw');
+		if (canvas.getContext) {
+			var context = canvas.getContext('2d');
+		    //ここに具体的な描画内容を指定する
+			//色指定
+		    context.strokeStyle = 'rgba(255,255,255,0.85)';
+		    //線の太さ指定
+			context.lineWidth = 3;
+			context.beginPath();
+			context.arc(x,y, radius, 0, Math.PI*2, false);
+			context.stroke();
+		}
+}
+
+function init(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('draw');
+	if (canvas.getContext) {
+
+		var context = canvas.getContext('2d');
+	    //ここに具体的な描画内容を指定する
+	    //新しいパスを開始する
+	    context.beginPath();
+	    context.fillStyle = '#ff0000';
+	    context.fillRect(0,0, 400,200);
+	}
+	//location.reload();
+}
+
+//canvasのサイズを設定(自動設定だと正確な値が定められない)
+function canvasSize(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('draw');
+	//横幅を設定
+	canvas.width=400;
+	//縦幅を設定
+	canvas.height=200;
+}
+</script>
+</head>
+<body onmousedown="draw()" id="frame" onload="canvasSize(event)" onkeypress="insert(e)">
+	<b>お絵かきソフト(線と四角と円のみ)</b>
+	<div>以下の黒板に線の始点と終点の2点をクリックして下さい</div>
+	<div>また、長方形を挿入する場合は長さを入力してから、作りたい所を<b>クリックしてから</b>Sキーを押してください</div>
+	<div>丸を挿入する場合は半径を入力してから、作りたい所を<b>クリックしてから</b>Oキーを押してください</div>
+	<canvas id="draw">
+	</canvas>
+
+<form>
+<table>
+	<tr>
+		<td align="left">長方形の縦の長さ:</td>
+		<td><input type="text" id="heigth" value="20"/></td>
+	<tr>
+		<td align="left">長方形の横の長さ:</td>
+		<td><input type="text" id="width" value="20"/></td>
+	</tr>
+	<tr>
+		<td align="left">円の半径:</td>
+		<td><input type="text" id="radius" value="10"/></td>
+	</tr>
+</table>
+<div align="right">
+	<input type="button" onclick="init()"value="初期化" />
+</div>
+</form>
+</body>
+</html>

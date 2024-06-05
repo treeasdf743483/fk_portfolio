@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+var key = "A";
+var keyCode;
+var keyarr = new Array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X"
+		,"Y","Z");
+var charLog = "";
+document.onkeydown = function(e){
+	// キーコード
+	keyCode = e.keyCode;
+
+	document.getElementById(keyarr[keyCode-65]).style.color = "red";
+	setTimeout(init,100);
+
+	charLog = charLog + keyarr[keyCode-65];
+	document.getElementById("charLog").innerHTML = charLog;
+}
+function init(){
+	document.getElementById(keyarr[keyCode-65]).style.color = "black";
+}
+setTimeout(init,5000);
+</script>
+</head>
+<body>
+<form id="form">
+<table>
+  <tr>
+    <td id="Q">Q</td>
+    <td id="W">W</td>
+    <td id="E">E</td>
+    <td id="R">R</td>
+    <td id="T">T</td>
+    <td id="Y">Y</td>
+    <td id="U">U</td>
+    <td id="I">I</td>
+    <td id="O">O</td>
+    <td id="P">P</td>
+  </tr>
+  <tr>
+    <td id="A">A</td>
+    <td id="S">S</td>
+    <td id="D">D</td>
+    <td id="F">F</td>
+    <td id="G">G</td>
+    <td id="H">H</td>
+    <td id="J">J</td>
+    <td id="K">K</td>
+    <td id="L">L</td>
+  </tr>
+    <tr>
+    <td id="Z">Z</td>
+    <td id="X">X</td>
+    <td id="C">C</td>
+    <td id="V">V</td>
+    <td id="B">B</td>
+    <td id="N">N</td>
+    <td id="M">M</td>
+    </tr>
+</table>
+<table>
+    <tr>
+     <td id="charLog"></td>
+    </tr>
+</table>
+</form>
+
+</body>
+</html>

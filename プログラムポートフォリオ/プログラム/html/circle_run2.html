@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- saved from url=(0081)file:///D:/%E6%97%A7eclipse%20workspace/workspace/WEBAPPJS/WebContent/circle.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>ランダムに円環生成</title>
+<style>
+ #draw{
+    background-color:#ff0000;
+    }
+ #h{
+    background-color:#0000ff;
+    }
+</style>
+<script type="text/javascript">
+var x = new Array(2);
+var y = new Array(2);
+var cnt = 0;
+var cnt2 = 0;
+var cnt3 = 0;
+var flg = 0;
+
+var interval = 0;
+var interval2 = 0;
+var r = 50;
+var bflg = false;
+var bflg2 = false;
+var gw;
+var x_c=100;
+var y_c=100;
+var r_fst=50;
+var r_in=0.5*50;
+var cntFlg =true;
+function torus(){
+	cnt = 0;
+    x_c = Math.random()*1000;
+    y_c =  Math.random()*600;
+	
+		if(!bflg){
+		gw = setInterval(exec,2000);
+	}
+}
+function torus2(){
+    
+    x_c = Math.random()*1000;
+    y_c =  Math.random()*600;
+    setInterval(exec2,2000);
+}
+
+//円環何度も出る
+function exec(){
+    cnt++;
+    if(cnt ==10){
+    bflg = true;
+    
+    }
+    console.log(bflg);
+	interval = cnt* r*0.5;
+	donuts(x_c,y_c,r_fst+interval,r_in);
+	drawRad(x_c,y_c,r_fst);
+	if(bflg){
+		//clearInterval(gw);
+		bflg=false;
+	}
+}
+//cnt-になる 4:14START
+function exec2(){
+	if(cntFlg == true){
+    	cnt2++;
+    }else {
+    	cnt2--;
+    }
+    cnt3++;
+    if(cnt3 % 4 == 0){
+    bflg2 = !bflg2;
+    cntFlg=!cntFlg;
+    if(cnt2 == 15){
+    	cnt2=0;
+    	
+    	return null;
+    }
+    } 
+    console.log(cnt2);
+    console.log(bflg2);
+	interval2 = cnt2* r*0.5;
+	donuts(x_c,y_c,r_fst,r_in+interval2);
+	drawRad(x_c,y_c,r_fst);
+}
+//膜を描くメソッド
+function donuts(x,y,radius,r_in2){
+		//描画コンテキストの取得
+		var canvas = document.getElementById('draw');
+		if (canvas.getContext) {
+			//ここに具体的な描画内容を指定する
+			var context = canvas.getContext('2d');
+			context.beginPath();
+			context.fillStyle = '#ff0000';
+			context.fillRect(0,0, 1000,600);
+			context.fillStyle = '#00ff00';
+			context.moveTo(x,y);
+			context.arc(x,y,radius+r_in2, 0, Math.PI*2, false);
+			context.fill();
+			context.closePath();
+			context.beginPath();
+			context.fillStyle = '#ff0000';
+			context.moveTo(x,y);
+			console.log(r_in);
+			context.arc(x,y,radius, 0, Math.PI*2, false);
+			
+			context.stroke();
+			context.fill();
+	    context.closePath();
+	    //befDraw(x,y,radius+interval-1.25*r*2);
+	    
+		}
+}
+
+//縦断図
+function drawRad(x,y,rad){
+	//描画コンテキストの取得
+		var canvas = document.getElementById('h');
+		if (canvas.getContext) {
+			//ここに具体的な描画内容を指定する
+			var context = canvas.getContext('2d');
+			context.beginPath();
+			context.fillStyle = '#00ff00';
+			context.moveTo(x,y+10*cnt);
+			var line = context.lineTo(x+rad+r_in+interval,y+10*cnt)
+			context.stroke();
+			context.fill();
+			context.closePath();
+}
+}
+function init(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('draw');
+	if (canvas.getContext) {
+	
+	//横幅を設定
+	canvas.width=1000;
+	//縦幅を設定
+	canvas.height=600;
+	}
+//描画コンテキストの取得
+	var canvas2 = document.getElementById('h');
+	if (canvas2.getContext) {
+	
+	//横幅を設定
+	canvas2.width=1000;
+	//縦幅を設定
+	canvas2.height=600;
+	}
+}
+function clearRect(){
+	//描画コンテキストの取得
+	var canvas = document.getElementById('draw');
+	if (canvas.getContext) {
+		var context = canvas.getContext('2d');
+		context.fillRect(0,0, 1000,600);
+	}
+}
+</script>
+</head>
+<body onload="init()">
+	<div><b>説明：円環をランダムに生成する。長さが時間によって変わる。青い四角の中に円環の半径の変化の様子を描く</b><div>
+	<canvas id="draw" width="1000" height="600">
+	</canvas>
+	<br>
+<div align="right">
+	<input type="button" onclick="torus()" value="膜生成1">
+	<input type="button" onclick="torus2()" value="膜生成2">
+</div>
+	<canvas id="h" width="1000" height="600">
+	</canvas>
+
+<form>
+
+
+</form>
+
+</div></div></body></html>

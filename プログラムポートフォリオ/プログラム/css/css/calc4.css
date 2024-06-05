@@ -1,0 +1,50 @@
+#calcBtn {
+	font-weight: 800;
+	font-family: 'arial';
+}
+<--#Btn{
+	width:30px;
+}-->
+#DelBtn{
+	padding: 0;
+	width:30px;
+}
+
+
+#calcT {
+	border-collapse: separate;
+	border-spacing: 4px;
+	background-color: #666666;
+	height:600px;
+}
+
+#txtT {
+	border-collapse: separate;
+	border-spacing: 4px;
+	margin-top: 10px;
+	background-color: #777777;
+}
+
+#txt {
+	width: 20%;
+}
+
+#NoT {
+	border: 0;
+	background-color: #333333;
+}
+
+#M {
+	background: #EEE;
+	border: 1px solid #DDD;
+	border-radius: 20px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	color: #111;
+	padding: 1px 0;
+	font-weight: 800;
+	font-family: 'arial';
+}
+#MemoT{
+	width:20%;
+}
